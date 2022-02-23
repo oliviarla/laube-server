@@ -1,9 +1,11 @@
 package com.teamk.laube.domain.review;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teamk.laube.domain.perfume.Perfume;
+import com.teamk.laube.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,29 +13,39 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Entity
+
 public class Review {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-    private Long userId;
-    private Long perfumeId;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "perfume_id")
+    private Perfume perfume;
 
     private int rate;
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime regdate=LocalDateTime.now();
-    @Column
     private LocalDateTime updatedate;
-    @Column
-    private LocalDateTime deletedate;
+
     @Builder
-    public Review(String username, Long userId, Long perfumeId, int rate, String content, Long id){
-        this.username=username;
-        this.userId=userId;
-        this.perfumeId=perfumeId;
+    public Review(User user, Perfume perfume, int rate, String content){
+        this.user=user;
+        this.perfume=perfume;
         this.content=content;
         this.rate=rate;
-        this.id=id;
+    }
+
+    public void update(String content, User user){
+        this.content=content;
+        this.user=user;
+        this.updatedate=LocalDateTime.now();
     }
 }
