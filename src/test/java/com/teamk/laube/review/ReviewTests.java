@@ -19,6 +19,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SpringBootTest
@@ -72,6 +73,13 @@ public class ReviewTests {
         //List<Review> reviews = reviewRepository.findAll();
         System.out.println("review 개수: "+ reviewsCount);
     }
+
+    @Test
+    void findById(){
+        Optional<Review> review = reviewRepository.findById((long)2);
+        System.out.println(review.toString());
+    }
+
     @Test
     void delete() {
         // 1. 게시글 조회

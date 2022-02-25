@@ -2,16 +2,14 @@ package com.teamk.laube.controller;
 
 import com.teamk.laube.dto.ReviewRequestDto;
 import com.teamk.laube.dto.ReviewResponseDto;
-import com.teamk.laube.exception.CustomException;
-import com.teamk.laube.exception.ErrorCode;
 import com.teamk.laube.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ReviewApiController {
     private final ReviewService reviewService;
@@ -24,6 +22,11 @@ public class ReviewApiController {
     @GetMapping("/reviews")
     public List<ReviewResponseDto> findAll(){
         return reviewService.findAll();
+    }
+
+    @GetMapping("/reviews/{id}")
+    public Optional<ReviewResponseDto> findById(@PathVariable final Long id){
+        return reviewService.findById(id);
     }
 
     @PatchMapping("/reviews/{id}")
