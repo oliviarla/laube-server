@@ -5,9 +5,7 @@ import com.teamk.laube.domain.perfume.PerfumeRepository;
 import com.teamk.laube.domain.perfumebase.PerfumeBaseRepository;
 import com.teamk.laube.domain.perfumemid.PerfumeMidRepository;
 import com.teamk.laube.domain.perfumetop.PerfumeTopRepository;
-import com.teamk.laube.domain.review.Review;
 import com.teamk.laube.dto.PerfumeResponseDto;
-import com.teamk.laube.dto.ReviewResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,8 +36,14 @@ public class PerfumeTests {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         List<Perfume> list = perfumeRepository.findAll(sort);
         System.out.println(list.stream().map(PerfumeResponseDto::new).collect(Collectors.toList()));
-        //List<Review> reviews = reviewRepository.findAll();
+
         System.out.println("perfume 개수: "+ perfumesCount);
+    }
+
+    @Test
+    void findTopNoteByPerfume(){
+        //향수 id로 향수의 top note 가져오기
+        perfumeTopRepository.findByPerfume_Id((long)1).forEach(perfumeTop -> System.out.println("결과: "+ perfumeTop.getNote().getName_kor()));
     }
 
 }

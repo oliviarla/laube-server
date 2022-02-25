@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +36,11 @@ public class ReviewService {
         Sort sort = Sort.by(Sort.Direction.DESC, "id", "regdate");
         List<Review> list = reviewRepository.findAll(sort);
         return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    }
+
+    public Optional<ReviewResponseDto> findById(Long id){
+        Optional<Review> review = reviewRepository.findById(id);
+        return review.map(ReviewResponseDto::new);
     }
 
     public Long update(final Long id, final ReviewRequestDto params){
