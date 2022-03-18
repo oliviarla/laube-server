@@ -1,10 +1,15 @@
 package com.teamk.laube.domain.perfume;
 
+import com.teamk.laube.domain.perfumebase.PerfumeBase;
+import com.teamk.laube.domain.perfumemid.PerfumeMid;
+import com.teamk.laube.domain.perfumetop.PerfumeTop;
+import com.teamk.laube.domain.review.Review;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -23,6 +28,14 @@ public class Perfume {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Transient
+    private List<Review> reviews;
+    @Transient
+    private List<PerfumeTop> tops;
+    @Transient
+    private List<PerfumeMid> mids;
+    @Transient
+    private List<PerfumeBase> bases;
 
     @Builder
     public Perfume(String name, Long price, String brand, String content){

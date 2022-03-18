@@ -30,7 +30,7 @@ public class ReviewService {
         return entity.getId();
     }
     /**
-     * 리뷰 리스트 조회
+     * 모든 리뷰 리스트 조회
      */
     public List<ReviewResponseDto> findAll(){
         Sort sort = Sort.by(Sort.Direction.DESC, "id", "regdate");
@@ -38,11 +38,25 @@ public class ReviewService {
         return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
     }
 
+    /**
+     * 리뷰 아이디로 조회
+     */
     public Optional<ReviewResponseDto> findById(Long id){
         Optional<Review> review = reviewRepository.findById(id);
         return review.map(ReviewResponseDto::new);
     }
 
+    /**
+     * 향수 아이디로 작성된 리뷰 조회
+     */
+    public List<ReviewResponseDto> findByPerfumeId(Long id){
+        List<Review> list = reviewRepository.findByPerfume_Id(id);
+        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    }
+
+    /**
+     * 리뷰 수정
+     */
     public Long update(final Long id, final ReviewRequestDto params){
         Review entity= reviewRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.POSTS_NOT_FOUND));
         entity.update(params.getContent(), params.getUser());

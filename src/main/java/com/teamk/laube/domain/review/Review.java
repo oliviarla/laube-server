@@ -1,6 +1,7 @@
 package com.teamk.laube.domain.review;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teamk.laube.domain.like.Like;
 import com.teamk.laube.domain.perfume.Perfume;
 import com.teamk.laube.domain.user.User;
 import lombok.Builder;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -25,9 +28,11 @@ public class Review {
     private User user;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "perfume_id")
     private Perfume perfume;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    Set<Like> likes = new HashSet<>();
 
     private int rate;
     @Column(columnDefinition = "TEXT")
@@ -36,16 +41,16 @@ public class Review {
     private LocalDateTime updatedate;
 
     @Builder
-    public Review(User user, Perfume perfume, int rate, String content){
-        this.user=user;
-        this.perfume=perfume;
-        this.content=content;
-        this.rate=rate;
+    public Review(User user, Perfume perfume, int rate, String content) {
+        this.user = user;
+        this.perfume = perfume;
+        this.content = content;
+        this.rate = rate;
     }
 
-    public void update(String content, User user){
-        this.content=content;
-        this.user=user;
-        this.updatedate=LocalDateTime.now();
+    public void update(String content, User user) {
+        this.content = content;
+        this.user = user;
+        this.updatedate = LocalDateTime.now();
     }
 }

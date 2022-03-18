@@ -11,16 +11,18 @@ import java.time.LocalDateTime;
 public class ReviewResponseDto {
     private String content;
     private int rate;
-    private User user;
-    private Perfume perfume;
+    private String userId;
+    private String userName;
+    //private Perfume perfume;
     private LocalDateTime regdate;
     private LocalDateTime updatedate;
 
     public ReviewResponseDto(Review entity){
-        this.user=entity.getUser();
+        this.userId=entity.getUser().getId();
+        this.userName=entity.getUser().getName();
         this.content=entity.getContent();
         this.rate=entity.getRate();
-        this.perfume=entity.getPerfume();
+        //this.perfume=entity.getPerfume();
         this.regdate=entity.getRegdate();
         this.updatedate=entity.getUpdatedate();
     }
