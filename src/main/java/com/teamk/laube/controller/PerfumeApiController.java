@@ -47,4 +47,13 @@ public class PerfumeApiController {
         return perfumeInstance;
     }
 
+    @GetMapping("/")
+    public List<Object[]> getPageByRate(){
+        return perfumeService.getPageByRate();
+    }
+
+    @GetMapping("/popular")
+    public List<Object[]> getPageByReviews(){
+        return perfumeService.getPageByReviews();
+    }
 }

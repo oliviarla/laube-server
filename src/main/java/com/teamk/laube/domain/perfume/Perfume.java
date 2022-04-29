@@ -27,21 +27,16 @@ public class Perfume {
     private String brand;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+    @Column(nullable = false)
+    private String image;
 
-    @Transient
-    private List<Review> reviews;
-    @Transient
-    private List<PerfumeTop> tops;
-    @Transient
-    private List<PerfumeMid> mids;
-    @Transient
-    private List<PerfumeBase> bases;
 
     @Builder
-    public Perfume(String name, Long price, String brand, String content){
+    public Perfume(String name, Long price, String brand, String content, String image){
         this.name=name;
         this.price=price;
         this.brand=brand;
         this.content=content;
+        this.image=image;
     }
 }

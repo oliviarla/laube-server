@@ -6,8 +6,8 @@ import com.teamk.laube.domain.perfume.Perfume;
 import com.teamk.laube.domain.perfume.PerfumeRepository;
 import com.teamk.laube.domain.review.Review;
 import com.teamk.laube.domain.review.ReviewRepository;
-import com.teamk.laube.domain.user.User;
-import com.teamk.laube.domain.user.UserRepository;
+import com.teamk.laube.domain.member.Member;
+import com.teamk.laube.domain.member.MemberRepository;
 import com.teamk.laube.dto.ReviewResponseDto;
 import com.teamk.laube.exception.CustomException;
 import com.teamk.laube.exception.ErrorCode;
@@ -32,7 +32,7 @@ public class ReviewTests {
     PerfumeRepository perfumeRepository;
 
     @Autowired
-    UserRepository userRepository;
+    MemberRepository memberRepository;
 
     @Autowired
     ReviewService reviewService;
@@ -45,16 +45,16 @@ public class ReviewTests {
                 .content("information")
                 .build();
         perfumeRepository.save(perfume);
-        User user = User.builder()
-                .id("a")
+        Member member = Member.builder()
+                .id("ana")
                 .name("이름")
                 .email("a@gmail.com")
-                .picture("picture link")
+                .image("picture link")
                 .token("tbjfh324biuy2")
                 .build();
-        userRepository.save(user);
+        memberRepository.save(member);
         Review params = Review.builder()
-                .user(user)
+                .member(member)
                 .content("내용")
                 .rate(5)
                 .perfume(perfume)
@@ -92,14 +92,14 @@ public class ReviewTests {
     void update(){
         Review entity= reviewRepository.findById((long)2).orElseThrow(()->new CustomException(ErrorCode.POSTS_NOT_FOUND));
         System.out.println("내용:"+entity.getContent());
-        User user = User.builder()
+        Member member = Member.builder()
                 .id("a")
                 .name("이름")
                 .email("a@gmail.com")
-                .picture("picture link")
+                .image("picture link")
                 .token("tbjfh324biuy2")
                 .build();
-        entity.update("good!", user);
+        entity.update("good!", member);
         System.out.println("내용:"+entity.getContent());
         reviewRepository.save(entity);
     }

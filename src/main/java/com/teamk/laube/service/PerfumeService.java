@@ -12,14 +12,13 @@ import com.teamk.laube.domain.perfumetop.PerfumeTopRepository;
 import com.teamk.laube.dto.NoteResponseDto;
 import com.teamk.laube.dto.PerfumeResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -83,5 +82,21 @@ public class PerfumeService {
         List<Note> perfumeBases = new ArrayList<>();
         perfumeBaseList.forEach(perfumeBase -> perfumeBases.add(perfumeBase.getNote()));
         return perfumeBases.stream().map(NoteResponseDto::new).collect(Collectors.toList());
+    }
+
+    public List<Object[]> getPageByRate(){
+        PageRequest pageRequest=PageRequest.of(0, 10);
+
+        Page<Object[]> result = perfumeRepository.getPageByRate(pageRequest);
+
+        return result.getContent();
+    }
+
+    public List<Object[]> getPageByReviews(){
+        PageRequest pageRequest=PageRequest.of(0, 10);
+
+        Page<Object[]> result = perfumeRepository.getPageByReviews(pageRequest);
+
+        return result.getContent();
     }
 }

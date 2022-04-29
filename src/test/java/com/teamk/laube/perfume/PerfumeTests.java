@@ -7,22 +7,24 @@ import com.teamk.laube.domain.perfumebase.PerfumeBaseRepository;
 import com.teamk.laube.domain.perfumemid.PerfumeMidRepository;
 import com.teamk.laube.domain.perfumetop.PerfumeTop;
 import com.teamk.laube.domain.perfumetop.PerfumeTopRepository;
-import com.teamk.laube.domain.review.Review;
-import com.teamk.laube.dto.NoteResponseDto;
 import com.teamk.laube.dto.PerfumeResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SpringBootTest
+@WebAppConfiguration
 @PropertySource("classpath:config.properties")
 public class PerfumeTests {
     @Autowired
@@ -65,5 +67,16 @@ public class PerfumeTests {
     void findByName(){
         List<Perfume> perfumes = perfumeRepository.findByName("perfume");
         perfumes.forEach(perfume -> System.out.println(perfume.getContent()));
+    }
+
+    @Test
+    public void testListPage(){
+        PageRequest pageRequest=PageRequest.of(0, 10); //, Sort.by(Sort.Direction.DESC, "id")
+
+        Page<Object[]> result = perfumeRepository.getPageByRate(pageRequest);
+
+        for(Object[] objects:result.getContent()){
+            System.out.println(Arrays.toString(objects));
+        }
     }
 }

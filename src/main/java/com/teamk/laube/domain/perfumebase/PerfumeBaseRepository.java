@@ -1,6 +1,5 @@
 package com.teamk.laube.domain.perfumebase;
 
-import com.teamk.laube.domain.perfumetop.PerfumeTop;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 

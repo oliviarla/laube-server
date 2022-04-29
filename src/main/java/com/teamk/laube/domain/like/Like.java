@@ -1,8 +1,7 @@
 package com.teamk.laube.domain.like;
 
 import com.teamk.laube.domain.review.Review;
-import com.teamk.laube.domain.user.User;
-import lombok.Builder;
+import com.teamk.laube.domain.member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "like")
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +18,13 @@ public class Like {
     @ManyToOne
     @JoinColumn(name="review_id")
     private Review review;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
-    @Builder
-    public Like(Review review, User user){
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public Like(Member member, Review review){
+        this.member=member;
         this.review=review;
-        this.user=user;
     }
 }

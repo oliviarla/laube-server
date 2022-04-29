@@ -26,7 +26,7 @@ public class ReviewService {
     @Transactional
     public Long save(final ReviewRequestDto params){
         Review entity= reviewRepository.save(params.toEntity());
-        System.out.println(entity.getUser().getId());
+        System.out.println(entity.getMember().getId());
         return entity.getId();
     }
     /**
@@ -59,7 +59,7 @@ public class ReviewService {
      */
     public Long update(final Long id, final ReviewRequestDto params){
         Review entity= reviewRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.POSTS_NOT_FOUND));
-        entity.update(params.getContent(), params.getUser());
+        entity.update(params.getContent(), params.getMember());
         reviewRepository.save(entity);
         return entity.getId();
     }

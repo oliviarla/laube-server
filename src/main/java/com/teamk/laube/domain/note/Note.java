@@ -13,6 +13,5 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name_eng;
     private String name_kor;
 }
