@@ -8,28 +8,24 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MemberDto {
-    private String id;
+    private Long id;
     private String name;
     private String email;
-    private String image;
-    private String token;
+    private String imageUrl;
 
     @Builder
-    public MemberDto(String id, String name, String email, String image, String token){
+    public MemberDto(Long id, String name, String email, String imageUrl, String token){
         this.id=id;
         this.name=name;
         this.email=email;
-        this.image=image;
-        this.token=token;
+        this.imageUrl=imageUrl;
     }
 
     public Member toEntity(){
-        return Member.builder().
-                id(id)
+        return Member.builder()
                 .name(name)
                 .email(email)
-                .image(image)
-                .token(token)
+                .imageUrl(imageUrl)
                 .build();
     }
 }

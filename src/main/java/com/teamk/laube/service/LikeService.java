@@ -1,7 +1,7 @@
 package com.teamk.laube.service;
 
-import com.teamk.laube.domain.like.Like;
-import com.teamk.laube.domain.like.LikeRepository;
+import com.teamk.laube.domain.like.Likes;
+import com.teamk.laube.domain.like.LikesRepository;
 import com.teamk.laube.domain.review.Review;
 import com.teamk.laube.domain.review.ReviewRepository;
 import com.teamk.laube.domain.member.Member;
@@ -15,14 +15,14 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class LikeService {
-    private final LikeRepository likeRepository;
+    private final LikesRepository likeRepository;
     private final ReviewRepository reviewRepository;
 
     public boolean addLike(Member member, Long reviewId) {
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         Review review = (Review) optionalReview.ofNullable(null).get();
         if(!isAlreadyLike(member, review)){
-            likeRepository.save(new Like(member, review));
+            likeRepository.save(new Likes(member, review));
             return true;
         }
         return false;
@@ -31,8 +31,8 @@ public class LikeService {
     private void cancelLike(Member member, Long reviewId) throws Exception {
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         Review review = (Review) optionalReview.ofNullable(null).get();
-        Optional<Like> optionalLike = likeRepository.findByMemberAndReview(member, review);
-        Like like = (Like) optionalLike.ofNullable(null).get();
+        Optional<Likes> optionalLike = likeRepository.findByMemberAndReview(member, review);
+        Likes like = (Likes) optionalLike.ofNullable(null).get();
 
         likeRepository.delete(like);
     }

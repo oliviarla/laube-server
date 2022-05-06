@@ -19,7 +19,7 @@ public class MemberService {
     private final ReviewRepository reviewRepository;
 
     @Transactional
-    public String save(MemberDto memberDto){
+    public Long save(MemberDto memberDto){
         return memberRepository.save(memberDto.toEntity()).getId();
     }
 

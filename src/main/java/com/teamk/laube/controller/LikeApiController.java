@@ -16,21 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class LikeApiController {
     private final LikeService likeService;
 
-    @PostMapping("/like/{recipeId}")
-    public ResponseEntity<String> addLike(
-            @AuthenticationPrincipal MemberAdapter memberAdapter,
-            @PathVariable Long recipeId) {
-
-        boolean result = false;
-
-        if (memberAdapter != null) {
-            result = likeService.addLike(memberAdapter.getMember(), recipeId);
-        }
-
-        return result ?
-                new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
+//    @PostMapping("/like/{recipeId}")
+//    public ResponseEntity<String> addLike(
+//            @AuthenticationPrincipal MemberAdapter memberAdapter,
+//            @PathVariable Long recipeId) {
+//
+//        boolean result = false;
+//
+//        if (memberAdapter != null) {
+//            result = likeService.addLike(memberAdapter.getMember(), recipeId);
+//        }
+//
+//        return result ?
+//                new ResponseEntity<>(HttpStatus.OK)
+//                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//    }
 
 //    @GetMapping("/like")
 //    public List<String> getLikeCount(@RequestParam("id") Long id, @LoginMember User user) throws Exception {

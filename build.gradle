@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client'
@@ -33,6 +34,17 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    //oauth
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //jwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+
+    //for AppProperties Class
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 test {

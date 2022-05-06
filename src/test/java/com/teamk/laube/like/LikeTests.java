@@ -1,6 +1,6 @@
 package com.teamk.laube.like;
 
-import com.teamk.laube.domain.like.LikeRepository;
+import com.teamk.laube.domain.like.LikesRepository;
 import com.teamk.laube.domain.review.ReviewRepository;
 import com.teamk.laube.domain.member.Member;
 import com.teamk.laube.service.LikeService;
@@ -13,22 +13,20 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:config.properties")
 public class LikeTests {
     @Autowired
-    LikeRepository likeRepository;
+    LikesRepository likeRepository;
     @Autowired
     ReviewRepository reviewRepository;
     @Autowired
     LikeService likeService;
 
     Member user = Member.builder()
-            .id("a")
             .name("이름")
             .email("a@gmail.com")
-            .image("picture link")
-            .token("tbjfh324biuy2")
+            .imageUrl("picture link")
             .build();
     @Test
     public void likeTest(){
         //likeRepository.findByReview_Id((long)2);
-        likeService.count((long)2, user).forEach(s -> System.out.println(s));
+        likeService.count((long)1, user).forEach(s -> System.out.println(s));
     }
 }

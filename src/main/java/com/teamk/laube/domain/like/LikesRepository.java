@@ -5,10 +5,11 @@ import com.teamk.laube.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface LikeRepository extends JpaRepository<Like, Long> {
-    Optional<Like> findByMemberAndReview(Member member, Review review);
+public interface LikesRepository extends JpaRepository<Likes, Long> {
+    Optional<Likes> findByMemberAndReview(Member member, Review review);
     Integer countByReview(Review review);
-    Like findByReview_Id(@Param(value="ReviewId") long reviewId);
+    List<Likes> findByReview_Id(@Param(value="ReviewId") long reviewID);
 }

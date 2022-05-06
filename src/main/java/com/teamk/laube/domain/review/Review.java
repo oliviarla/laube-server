@@ -1,6 +1,6 @@
 package com.teamk.laube.domain.review;
 
-import com.teamk.laube.domain.like.Like;
+import com.teamk.laube.domain.like.Likes;
 import com.teamk.laube.domain.perfume.Perfume;
 import com.teamk.laube.domain.member.Member;
 import lombok.Builder;
@@ -30,7 +30,7 @@ public class Review {
     private Perfume perfume;
 
     @OneToMany(cascade = CascadeType.ALL)
-    Set<Like> likes = new HashSet<>();
+    Set<Likes> likes = new HashSet<>();
 
     private int rate;
     @Column(columnDefinition = "TEXT")

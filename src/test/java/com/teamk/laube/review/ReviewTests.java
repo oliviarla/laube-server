@@ -2,6 +2,7 @@ package com.teamk.laube.review;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.teamk.laube.domain.member.AuthProvider;
 import com.teamk.laube.domain.perfume.Perfume;
 import com.teamk.laube.domain.perfume.PerfumeRepository;
 import com.teamk.laube.domain.review.Review;
@@ -43,14 +44,18 @@ public class ReviewTests {
                 .price((long)150000)
                 .brand("brand")
                 .content("information")
+                .image("links")
                 .build();
         perfumeRepository.save(perfume);
+
         Member member = Member.builder()
-                .id("ana")
-                .name("이름")
-                .email("a@gmail.com")
-                .image("picture link")
-                .token("tbjfh324biuy2")
+                .name("tom")
+                .email("tom@gmail.com")
+                .emailVerified(true)
+                .imageUrl("picture link")
+                .password("1234")
+                .provider(AuthProvider.google)
+                .providerId("tom")
                 .build();
         memberRepository.save(member);
         Review params = Review.builder()
@@ -61,7 +66,7 @@ public class ReviewTests {
                 .build();
         reviewRepository.save(params);
 
-        Review entity = reviewRepository.findById(2L).get();
+        Review entity = reviewRepository.findById(1L).get();
         assertThat(entity.getContent()).isEqualTo("내용");
     }
     @Test
@@ -93,11 +98,9 @@ public class ReviewTests {
         Review entity= reviewRepository.findById((long)2).orElseThrow(()->new CustomException(ErrorCode.POSTS_NOT_FOUND));
         System.out.println("내용:"+entity.getContent());
         Member member = Member.builder()
-                .id("a")
                 .name("이름")
                 .email("a@gmail.com")
-                .image("picture link")
-                .token("tbjfh324biuy2")
+                .imageUrl("picture link")
                 .build();
         entity.update("good!", member);
         System.out.println("내용:"+entity.getContent());

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class ReviewResponseDto {
     private String content;
     private int rate;
-    private String userId;
+    private Long userId;
     private String username;
     private LocalDateTime regdate;
     private LocalDateTime updatedate;
