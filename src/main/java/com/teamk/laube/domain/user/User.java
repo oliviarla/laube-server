@@ -1,10 +1,10 @@
-package com.teamk.laube.domain.member;
+package com.teamk.laube.domain.user;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-public class Member extends TimeEntity {
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -42,7 +42,7 @@ public class Member extends TimeEntity {
     private String providerId;
 
     @Builder
-    public Member(String name, String email, Boolean emailVerified, String imageUrl, String password, AuthProvider provider, String providerId){
+    public User(String name, String email, Boolean emailVerified, String imageUrl, String password, AuthProvider provider, String providerId){
         this.name=name;
         this.email=email;
         this.emailVerified=emailVerified;

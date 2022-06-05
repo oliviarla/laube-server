@@ -1,5 +1,4 @@
 package com.teamk.laube.util;
-
 import org.springframework.util.SerializationUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -54,4 +53,6 @@ public class CookieUtils {
         return cls.cast(SerializationUtils.deserialize(
                 Base64.getUrlDecoder().decode(cookie.getValue())));
     }
+
+
 }

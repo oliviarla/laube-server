@@ -2,7 +2,7 @@ package com.teamk.laube.domain.review;
 
 import com.teamk.laube.domain.like.Likes;
 import com.teamk.laube.domain.perfume.Perfume;
-import com.teamk.laube.domain.member.Member;
+import com.teamk.laube.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name="member_id")
-    private Member member;
+    private User member;
 
     @ManyToOne
     @JoinColumn(name = "perfume_id")
@@ -39,14 +39,14 @@ public class Review {
     private LocalDateTime updatedate;
 
     @Builder
-    public Review(Member member, Perfume perfume, int rate, String content) {
+    public Review(User member, Perfume perfume, int rate, String content) {
         this.member = member;
         this.perfume = perfume;
         this.content = content;
         this.rate = rate;
     }
 
-    public void update(String content, Member member) {
+    public void update(String content, User member) {
         this.content = content;
         this.member = member;
         this.updatedate = LocalDateTime.now();

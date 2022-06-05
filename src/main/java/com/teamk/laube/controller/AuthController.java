@@ -1,14 +1,15 @@
 package com.teamk.laube.controller;
 
-import com.teamk.laube.domain.member.AuthProvider;
+import com.teamk.laube.domain.user.AuthProvider;
 import com.teamk.laube.exception.BadRequestException;
 import com.teamk.laube.payload.ApiResponse;
 import com.teamk.laube.payload.AuthResponse;
 import com.teamk.laube.payload.LoginRequest;
 import com.teamk.laube.payload.SignUpRequest;
 import com.teamk.laube.security.TokenProvider;
-import com.teamk.laube.domain.member.Member;
-import com.teamk.laube.domain.member.MemberRepository;
+import com.teamk.laube.domain.user.User;
+import com.teamk.laube.domain.user.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,13 +25,14 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/auth")
+@Log4j2
 public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository memberRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -47,9 +49,9 @@ public class AuthController {
                         loginRequest.getPassword()
                 )
         );
+        log.info("로그인 테스트", loginRequest);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String token = tokenProvider.createToken(authentication);
         return ResponseEntity.ok(new AuthResponse(token));
     }
@@ -61,7 +63,7 @@ public class AuthController {
         }
 
         // Creating user's account
-        Member user = new Member();
+        User user = new User();
         user.setName(signUpRequest.getName());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
@@ -69,7 +71,7 @@ public class AuthController {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Member result = memberRepository.save(user);
+        User result = memberRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/user/me")
@@ -78,5 +80,4 @@ public class AuthController {
         return ResponseEntity.created(location)
                 .body(new ApiResponse(true, "User registered successfully@"));
     }
-
 }

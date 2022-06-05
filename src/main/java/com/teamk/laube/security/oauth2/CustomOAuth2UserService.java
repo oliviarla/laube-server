@@ -1,14 +1,12 @@
 package com.teamk.laube.security.oauth2;
 
+import com.teamk.laube.domain.user.AuthProvider;
+import com.teamk.laube.domain.user.User;
+import com.teamk.laube.domain.user.UserRepository;
 import com.teamk.laube.exception.OAuth2AuthenticationProcessingException;
-
 import com.teamk.laube.security.UserPrincipal;
-
-import com.teamk.laube.security.oauth2.user.OAuth2UserInfoFactory;
-import com.teamk.laube.domain.member.AuthProvider;
-import com.teamk.laube.domain.member.Member;
-import com.teamk.laube.domain.member.MemberRepository;
 import com.teamk.laube.security.oauth2.user.OAuth2UserInfo;
+import com.teamk.laube.security.oauth2.user.OAuth2UserInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -25,7 +23,7 @@ import java.util.Optional;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository userRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
@@ -47,8 +45,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
 
-        Optional<Member> userOptional = memberRepository.findByEmail(oAuth2UserInfo.getEmail());
-        Member user;
+        Optional<User> userOptional = userRepository.findByEmail(oAuth2UserInfo.getEmail());
+        User user;
         if(userOptional.isPresent()) {
             user = userOptional.get();
             if(!user.getProvider().equals(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
@@ -64,21 +62,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 
-    private Member registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
-        Member user = new Member();
+    private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
+        User user = new User();
 
         user.setProvider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
         user.setProviderId(oAuth2UserInfo.getId());
         user.setName(oAuth2UserInfo.getName());
         user.setEmail(oAuth2UserInfo.getEmail());
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
-        return memberRepository.save(user);
+        return userRepository.save(user);
     }
 
-    private Member updateExistingUser(Member existingUser, OAuth2UserInfo oAuth2UserInfo) {
+    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
         existingUser.setName(oAuth2UserInfo.getName());
         existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
-        return memberRepository.save(existingUser);
+        return userRepository.save(existingUser);
     }
 
 }

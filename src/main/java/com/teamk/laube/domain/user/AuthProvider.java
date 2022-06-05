@@ -1,4 +1,4 @@
-package com.teamk.laube.domain.member;
+package com.teamk.laube.domain.user;
 
 public enum AuthProvider {
     local,

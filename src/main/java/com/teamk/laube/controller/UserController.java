@@ -1,13 +1,13 @@
 package com.teamk.laube.controller;
 
-import com.teamk.laube.domain.member.Member;
-import com.teamk.laube.domain.member.MemberRepository;
+import com.teamk.laube.domain.user.User;
+import com.teamk.laube.domain.user.UserRepository;
 import com.teamk.laube.dto.ReviewResponseDto;
-import com.teamk.laube.dto.MemberDto;
+import com.teamk.laube.dto.UserDto;
 import com.teamk.laube.exception.ResourceNotFoundException;
 import com.teamk.laube.security.CurrentUser;
 import com.teamk.laube.security.UserPrincipal;
-import com.teamk.laube.service.MemberService;
+import com.teamk.laube.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,12 +17,12 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-public class MemberController {
-    private final MemberService memberService;
+public class UserController {
+    private final UserService memberService;
 
     @CrossOrigin("http://localhost:3000")
     @PostMapping(value="/user", consumes = "application/json")
-    public Long save(@RequestBody MemberDto memberDto){
+    public Long save(@RequestBody UserDto memberDto){
         System.out.println(memberDto.getId());
         return memberService.save(memberDto);
     }
@@ -33,12 +33,12 @@ public class MemberController {
     }
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
-    public Member getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-        return memberRepository.findById(userPrincipal.getId())
+    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+        return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
 }

@@ -4,7 +4,7 @@ import com.teamk.laube.domain.like.Likes;
 import com.teamk.laube.domain.like.LikesRepository;
 import com.teamk.laube.domain.review.Review;
 import com.teamk.laube.domain.review.ReviewRepository;
-import com.teamk.laube.domain.member.Member;
+import com.teamk.laube.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ public class LikeService {
     private final LikesRepository likeRepository;
     private final ReviewRepository reviewRepository;
 
-    public boolean addLike(Member member, Long reviewId) {
+    public boolean addLike(User member, Long reviewId) {
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         Review review = (Review) optionalReview.ofNullable(null).get();
         if(!isAlreadyLike(member, review)){
@@ -28,7 +28,7 @@ public class LikeService {
         return false;
     }
 
-    private void cancelLike(Member member, Long reviewId) throws Exception {
+    private void cancelLike(User member, Long reviewId) throws Exception {
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         Review review = (Review) optionalReview.ofNullable(null).get();
         Optional<Likes> optionalLike = likeRepository.findByMemberAndReview(member, review);
@@ -37,7 +37,7 @@ public class LikeService {
         likeRepository.delete(like);
     }
 
-    public List<String> count(Long reviewId, Member member) {
+    public List<String> count(Long reviewId, User member) {
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         Review review = optionalReview.orElse(null);
         int reviewLikeCount = likeRepository.countByReview(review);
@@ -51,7 +51,7 @@ public class LikeService {
         return resultData;
     }
 
-    private boolean isAlreadyLike(Member member, Review review){
+    private boolean isAlreadyLike(User member, Review review){
         return likeRepository.findByMemberAndReview(member, review).isPresent();
     }
 }

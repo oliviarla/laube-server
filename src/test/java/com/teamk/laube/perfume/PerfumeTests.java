@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootTest
-@WebAppConfiguration
 @PropertySource("classpath:config.properties")
 public class PerfumeTests {
     @Autowired
@@ -58,9 +57,6 @@ public class PerfumeTests {
         for(Note perfumeTop: perfumeTops){
             System.out.println(perfumeTop.getName_kor());
         }
-//        perfumeTopRepository.findByPerfume_Id((long)1).forEach(perfumeTop -> System.out.println("결과: "+ perfumeTop.getNote().getName_kor()));
-//        perfumeMidRepository.findByPerfume_Id((long)1).forEach(perfumeMid -> System.out.println("결과: "+ perfumeMid.getNote().getName_kor()));
-//        perfumeBaseRepository.findByPerfume_Id((long)1).forEach(perfumeBase -> System.out.println("결과: "+ perfumeBase.getNote().getName_kor()));
     }
 
     @Test

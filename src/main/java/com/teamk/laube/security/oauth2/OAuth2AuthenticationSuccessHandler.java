@@ -1,15 +1,15 @@
 package com.teamk.laube.security.oauth2;
 
-
+import com.teamk.laube.config.AppProperties;
 import com.teamk.laube.exception.BadRequestException;
 import com.teamk.laube.security.TokenProvider;
 import com.teamk.laube.util.CookieUtils;
-import com.teamk.laube.config.AppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

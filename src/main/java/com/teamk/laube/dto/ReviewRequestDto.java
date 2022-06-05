@@ -2,7 +2,7 @@ package com.teamk.laube.dto;
 
 import com.teamk.laube.domain.perfume.Perfume;
 import com.teamk.laube.domain.review.Review;
-import com.teamk.laube.domain.member.Member;
+import com.teamk.laube.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ReviewRequestDto {
     private String content;
     private int rate;
-    private Member member;
+    private User member;
     private Perfume perfume;
 
     public Review toEntity(){

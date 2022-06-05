@@ -2,7 +2,7 @@ package com.teamk.laube.like;
 
 import com.teamk.laube.domain.like.LikesRepository;
 import com.teamk.laube.domain.review.ReviewRepository;
-import com.teamk.laube.domain.member.Member;
+import com.teamk.laube.domain.user.User;
 import com.teamk.laube.service.LikeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class LikeTests {
     @Autowired
     LikeService likeService;
 
-    Member user = Member.builder()
+    User user = User.builder()
             .name("이름")
             .email("a@gmail.com")
             .imageUrl("picture link")

@@ -2,13 +2,13 @@ package com.teamk.laube.review;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.teamk.laube.domain.member.AuthProvider;
+import com.teamk.laube.domain.user.AuthProvider;
 import com.teamk.laube.domain.perfume.Perfume;
 import com.teamk.laube.domain.perfume.PerfumeRepository;
 import com.teamk.laube.domain.review.Review;
 import com.teamk.laube.domain.review.ReviewRepository;
-import com.teamk.laube.domain.member.Member;
-import com.teamk.laube.domain.member.MemberRepository;
+import com.teamk.laube.domain.user.User;
+import com.teamk.laube.domain.user.UserRepository;
 import com.teamk.laube.dto.ReviewResponseDto;
 import com.teamk.laube.exception.CustomException;
 import com.teamk.laube.exception.ErrorCode;
@@ -33,7 +33,7 @@ public class ReviewTests {
     PerfumeRepository perfumeRepository;
 
     @Autowired
-    MemberRepository memberRepository;
+    UserRepository userRepository;
 
     @Autowired
     ReviewService reviewService;
@@ -48,7 +48,7 @@ public class ReviewTests {
                 .build();
         perfumeRepository.save(perfume);
 
-        Member member = Member.builder()
+        User member = User.builder()
                 .name("tom")
                 .email("tom@gmail.com")
                 .emailVerified(true)
@@ -57,7 +57,7 @@ public class ReviewTests {
                 .provider(AuthProvider.google)
                 .providerId("tom")
                 .build();
-        memberRepository.save(member);
+        userRepository.save(member);
         Review params = Review.builder()
                 .member(member)
                 .content("내용")
@@ -93,11 +93,12 @@ public class ReviewTests {
         // 2. 게시글 삭제
         reviewRepository.delete(entity);
     }
+
     @Test
     void update(){
         Review entity= reviewRepository.findById((long)2).orElseThrow(()->new CustomException(ErrorCode.POSTS_NOT_FOUND));
         System.out.println("내용:"+entity.getContent());
-        Member member = Member.builder()
+        User member = User.builder()
                 .name("이름")
                 .email("a@gmail.com")
                 .imageUrl("picture link")

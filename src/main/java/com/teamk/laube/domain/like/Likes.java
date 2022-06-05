@@ -1,7 +1,7 @@
 package com.teamk.laube.domain.like;
 
 import com.teamk.laube.domain.review.Review;
-import com.teamk.laube.domain.member.Member;
+import com.teamk.laube.domain.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,9 +21,9 @@ public class Likes {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private User member;
 
-    public Likes(Member member, Review review){
+    public Likes(User member, Review review){
         this.member=member;
         this.review=review;
     }
