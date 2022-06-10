@@ -49,8 +49,6 @@ public class AuthController {
                         loginRequest.getPassword()
                 )
         );
-        log.info("로그인 테스트", loginRequest);
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = tokenProvider.createToken(authentication);
         return ResponseEntity.ok(new AuthResponse(token));
